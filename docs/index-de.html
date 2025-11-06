@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroBit More v2 - Deutsche Version</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #4C97FF;
+        }
+        .button {
+            display: inline-block;
+            background: #4C97FF;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+        .button:hover {
+            background: #3373CC;
+        }
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #4C97FF;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        #langStatus {
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        // Set locale preference in localStorage before redirecting to Xcratch
+        function loadGerman() {
+            try {
+                // Try to set locale preference that Scratch/Xcratch might use
+                localStorage.setItem('scratchLanguage', 'de');
+                localStorage.setItem('locale', 'de');
+
+                // Add a small delay to ensure localStorage is set
+                setTimeout(() => {
+                    window.location.href = 'https://xcratch.github.io/editor/#https://gretel.github.io/mbit-more-v2/docs/projects/microbit-more-test.sb3';
+                }, 100);
+            } catch (e) {
+                // If localStorage fails, just redirect
+                window.location.href = 'https://xcratch.github.io/editor/#https://gretel.github.io/mbit-more-v2/docs/projects/microbit-more-test.sb3';
+            }
+        }
+
+        // Check current browser language
+        window.addEventListener('DOMContentLoaded', function() {
+            const browserLang = navigator.language || navigator.userLanguage;
+            const langStatus = document.getElementById('langStatus');
+
+            if (browserLang.startsWith('de')) {
+                langStatus.innerHTML = '✅ Ihr Browser ist auf Deutsch eingestellt: <code>' + browserLang + '</code>';
+                langStatus.parentElement.className = 'success-box';
+            } else {
+                langStatus.innerHTML = '⚠️ Ihr Browser ist auf <code>' + browserLang + '</code> eingestellt. Für deutsche Blöcke ändern Sie bitte die Browsersprache auf Deutsch.';
+                langStatus.parentElement.className = 'warning-box';
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>🇩🇪 MicroBit More v2 - Deutsche Version</h1>
+
+    <div class="info-box">
+        <strong>Was ist neu:</strong> Diese Version unterstützt deutsche Übersetzungen für alle MicroBit More Blöcke.
+        <br>Locale-Varianten wie <code>de-DE</code>, <code>de-AT</code>, <code>de-CH</code> werden automatisch auf <code>de</code> abgebildet.
+    </div>
+
+    <div id="langStatusBox" class="warning-box">
+        <div id="langStatus">Überprüfe Browsersprache...</div>
+    </div>
+
+    <h2>🚀 Schnellstart</h2>
+
+    <button onclick="loadGerman()" class="button">
+        In Xcratch öffnen (Deutsche Blöcke)
+    </button>
+
+    <h2>📋 Browsersprache auf Deutsch ändern</h2>
+
+    <p><strong>Chrome/Edge:</strong></p>
+    <ol>
+        <li>Öffnen Sie <code>chrome://settings/languages</code></li>
+        <li>Fügen Sie "Deutsch" hinzu</li>
+        <li>Verschieben Sie Deutsch an die erste Stelle</li>
+        <li>Browser neu starten</li>
+    </ol>
+
+    <p><strong>Firefox:</strong></p>
+    <ol>
+        <li>Öffnen Sie <code>about:preferences#general</code></li>
+        <li>Scrollen Sie zu "Sprache"</li>
+        <li>Fügen Sie "Deutsch [de]" hinzu</li>
+        <li>Setzen Sie es an die erste Stelle</li>
+    </ol>
+
+    <h2>🔗 Technische Details</h2>
+
+    <p><strong>Erweiterungs-URL:</strong></p>
+    <pre>https://gretel.github.io/mbit-more-v2/dist/microbitMore.mjs</pre>
+
+    <p><strong>Features:</strong></p>
+    <ul>
+        <li>✅ Deutsche Übersetzungen für alle Blöcke</li>
+        <li>✅ Locale-Fallback: <code>de-DE</code> → <code>de</code></li>
+        <li>✅ Unterstützung für <code>de-AT</code>, <code>de-CH</code>, <code>de_DE</code></li>
+        <li>✅ Alle vorhandenen Sprachen funktionieren unverändert</li>
+    </ul>
+
+    <hr style="margin: 40px 0;">
+
+    <p style="text-align: center; color: #666;">
+        Test Build • <a href="https://github.com/microbit-more/mbit-more-v2/pulls">Pull Request ansehen</a>
+    </p>
+</body>
+</html>
