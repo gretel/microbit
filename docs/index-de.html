@@ -75,13 +75,19 @@
         window.addEventListener('DOMContentLoaded', function() {
             const browserLang = navigator.language || navigator.userLanguage;
             const langStatus = document.getElementById('langStatus');
+            const instructionBox = document.getElementById('instructionBox');
+            const openButton = document.getElementById('openButton');
 
             if (browserLang.startsWith('de')) {
-                langStatus.innerHTML = '✅ Ihr Browser ist auf Deutsch eingestellt: <code>' + browserLang + '</code>';
+                langStatus.innerHTML = '✅ Ihr Browser ist auf Deutsch eingestellt: <code>' + browserLang + '</code><br>Die Blöcke werden auf Deutsch angezeigt!';
                 langStatus.parentElement.className = 'success-box';
+                openButton.innerHTML = 'In Xcratch öffnen (mit deutschen Blöcken)';
+                openButton.style.background = '#28a745';
             } else {
-                langStatus.innerHTML = '⚠️ Ihr Browser ist auf <code>' + browserLang + '</code> eingestellt. Für deutsche Blöcke ändern Sie bitte die Browsersprache auf Deutsch.';
+                langStatus.innerHTML = '❌ Ihr Browser ist auf <code>' + browserLang + '</code> eingestellt.<br><strong>Die Blöcke werden NICHT auf Deutsch sein!</strong><br>Bitte ändern Sie die Browsersprache auf Deutsch (siehe Anleitung unten).';
                 langStatus.parentElement.className = 'warning-box';
+                instructionBox.style.display = 'block';
+                openButton.innerHTML = 'Trotzdem öffnen (Blöcke in ' + browserLang + ')';
             }
         });
     </script>
@@ -100,9 +106,17 @@
 
     <h2>🚀 Schnellstart</h2>
 
-    <button onclick="loadGerman()" class="button">
-        In Xcratch öffnen (Deutsche Blöcke)
+    <div class="warning-box" id="instructionBox" style="display:none;">
+        <strong>⚠️ WICHTIG:</strong> Damit die Blöcke auf Deutsch erscheinen, muss Ihr Browser auf Deutsch eingestellt sein.
+        Siehe Anleitung unten. ↓
+    </div>
+
+    <button onclick="loadGerman()" class="button" id="openButton">
+        In Xcratch öffnen
     </button>
+    <p style="color: #666; font-size: 14px;">
+        <strong>Hinweis:</strong> Die Sprache der Blöcke richtet sich nach der Browsersprache.
+    </p>
 
     <h2>📋 Browsersprache auf Deutsch ändern</h2>
 
