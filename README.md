@@ -21,12 +21,14 @@ This is an extension for [Scratch3 by MIT](https://scratch.mit.edu/). You can co
 
 ## ⭐ What's New in This Fork
 
-This fork adds **complete German translation support** for all MicroBit More blocks:
-- ✅ 86+ German translations for all blocks and menus
-- ✅ Locale fallback support: `de-DE`, `de-AT`, `de-CH`, `de_DE` → `de`
+This fork **fixes German translation support** that was already present but not working:
+- 🔧 Fixed locale fallback logic: `de-DE`, `de-AT`, `de-CH`, `de_DE` → `de`
+- ✅ German translations (86+ blocks) now load correctly for German-speaking users
 - ✅ Kid-friendly landing page at [gretel.github.io/microbit](https://gretel.github.io/microbit)
 - ✅ Pre-configured Xcratch project for easy classroom use
 - ✅ All original languages (English, Japanese) still work unchanged
+
+**Note:** The German translations already existed in the codebase but weren't loading for regional locales. This fork only fixes the loading mechanism.
 
 **For Students:** Visit **[gretel.github.io/microbit](https://gretel.github.io/microbit)** for an easy-to-use landing page!
 
@@ -53,38 +55,6 @@ This extension can be used with other extension in [Xcratch](https://xcratch.git
 https://gretel.github.io/microbit/dist/microbitMore.mjs
 ```
 
-## Authors
+---
 
-👤 **Original Author: Koji Yokokawa**
-
-* Website: http://www.yengawa.com/
-* Github: [@yokobond](https://github.com/yokobond)
-* Original Project: [microbit-more/mbit-more-v2](https://github.com/microbit-more/mbit-more-v2)
-
-👤 **Fork Maintainer: gretel**
-
-* Github: [@gretel](https://github.com/gretel)
-* This Fork: [gretel/microbit](https://github.com/gretel/microbit)
-
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome!<br />
-For this fork: check [issues page](https://github.com/gretel/microbit/issues)<br />
-For the original project: check [upstream issues](https://github.com/microbit-more/mbit-more-v2/issues)
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-
-## 📝 License
-
-Copyright © 2020-2022 [Koji Yokokawa](https://github.com/yokobond).<br />
-This project is [MIT](https://github.com/gretel/microbit/blob/master/LICENSE) licensed.
-
-## 🔗 Upstream
-
-This is a fork of [microbit-more/mbit-more-v2](https://github.com/microbit-more/mbit-more-v2) with added German translation support and educational landing page.
-
-***
-_Original README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+**This is a fork of [microbit-more/mbit-more-v2](https://github.com/microbit-more/mbit-more-v2)** with fixed German translation loading and an educational landing page for classroom use.
