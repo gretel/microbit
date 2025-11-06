@@ -16,7 +16,8 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(unzip:*)"
+      "Bash(unzip:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

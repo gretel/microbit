@@ -100,7 +100,7 @@
     "microbitMore"
   ],
   "extensionURLs": [
-    ["microbitMore", "https://gretel.github.io/mbit-more-v2/dist/microbitMore.mjs"]
+    ["microbitMore", "https://gretel.github.io/microbit/dist/microbitMore.mjs"]
   ],
   "meta": {
     "semver": "3.0.0",
