@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroBit More - Translation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1 { color: #333; }
+        .test-section { margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 5px; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        code { background: #e0e0e0; padding: 2px 6px; border-radius: 3px; }
+        pre { background: #333; color: #fff; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 MicroBit More Translation Test</h1>
+
+    <div class="test-section">
+        <h2>Test Setup</h2>
+        <p>Browser Language: <code id="browser-lang"></code></p>
+        <p>HTML Lang Attribute: <code>de</code></p>
+    </div>
+
+    <div class="test-section">
+        <h2>Translation Test Results</h2>
+        <div id="test-results">Loading module...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Sample Translations</h2>
+        <div id="sample-translations">Loading...</div>
+    </div>
+
+    <script type="module">
+        // Display browser language
+        document.getElementById('browser-lang').textContent = navigator.language;
+
+        try {
+            // Import the module
+            const module = await import('./dist/microbitMore.mjs');
+
+            const resultsDiv = document.getElementById('test-results');
+            const samplesDiv = document.getElementById('sample-translations');
+
+            // Check what was exported
+            resultsDiv.innerHTML = `
+                <p class="success">✓ Module loaded successfully!</p>
+                <p>Exported: <code>${Object.keys(module).join(', ')}</code></p>
+            `;
+
+            // Check if blockClass and entry exist
+            if (module.blockClass) {
+                resultsDiv.innerHTML += `<p class="success">✓ blockClass found</p>`;
+            }
+
+            if (module.entry) {
+                resultsDiv.innerHTML += `<p class="success">✓ entry found</p>`;
+
+                // Try to get the extension info
+                if (module.entry.translationMap) {
+                    const langs = Object.keys(module.entry.translationMap);
+                    resultsDiv.innerHTML += `<p class="success">✓ translationMap available</p>`;
+                    resultsDiv.innerHTML += `<p>Available languages: <code>${langs.join(', ')}</code></p>`;
+
+                    // Show German translations
+                    if (module.entry.translationMap.de) {
+                        const germanTranslations = module.entry.translationMap.de;
+                        const sampleKeys = [
+                            'mbitMore.entry.name',
+                            'mbitMore.entry.description'
+                        ];
+
+                        let samplesHtml = '<h3>German (de) Translations:</h3><pre>';
+                        for (const key of sampleKeys) {
+                            if (germanTranslations[key]) {
+                                samplesHtml += `${key}: ${germanTranslations[key]}\n`;
+                            }
+                        }
+                        samplesHtml += '</pre>';
+
+                        samplesDiv.innerHTML = samplesHtml;
+                    }
+                }
+
+                // Check for name and description getters
+                try {
+                    const name = module.entry.name;
+                    const desc = module.entry.description;
+                    samplesDiv.innerHTML += `
+                        <h3>Extension Info (using getters):</h3>
+                        <pre>Name: ${name}\nDescription: ${desc}</pre>
+                    `;
+                } catch (e) {
+                    samplesDiv.innerHTML += `<p class="error">Could not get name/description: ${e.message}</p>`;
+                }
+            }
+
+        } catch (error) {
+            document.getElementById('test-results').innerHTML = `
+                <p class="error">✗ Failed to load module</p>
+                <pre>${error.message}\n${error.stack}</pre>
+            `;
+        }
+    </script>
+</body>
+</html>

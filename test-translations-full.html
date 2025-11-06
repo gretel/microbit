@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroBit More - Full Translation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 900px; margin: 0 auto; }
+        h1 { color: #333; }
+        .test-section { margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 5px; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        .warning { color: orange; font-weight: bold; }
+        code { background: #e0e0e0; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+        pre { background: #333; color: #fff; padding: 10px; border-radius: 5px; overflow-x: auto; font-size: 12px; }
+        button { padding: 10px 20px; margin: 5px; font-size: 14px; cursor: pointer; }
+        .locale-buttons { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🧪 MicroBit More - Full Translation Test</h1>
+
+    <div class="test-section">
+        <h2>Locale Selection</h2>
+        <p>Current Test Locale: <code id="current-locale">en</code></p>
+        <div class="locale-buttons">
+            <button onclick="testLocale('de')">Test German (de)</button>
+            <button onclick="testLocale('de-DE')">Test German Germany (de-DE)</button>
+            <button onclick="testLocale('de_DE')">Test German underscore (de_DE)</button>
+            <button onclick="testLocale('en')">Test English (en)</button>
+            <button onclick="testLocale('ja')">Test Japanese (ja)</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Translation Results</h2>
+        <div id="test-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Block Translations Sample</h2>
+        <div id="block-samples"></div>
+    </div>
+
+    <script type="module">
+        let module;
+
+        // Load the module once
+        try {
+            module = await import('./dist/microbitMore.mjs');
+            console.log('Module loaded:', module);
+        } catch (error) {
+            document.getElementById('test-results').innerHTML = `
+                <p class="error">✗ Failed to load module: ${error.message}</p>
+            `;
+        }
+
+        // Simulate Scratch's format-message system
+        function createFormatMessage(locale, translationsMap) {
+            const formatter = function(messageData) {
+                const { id, defaultMessage } = messageData;
+
+                // Look up translation
+                if (translationsMap && translationsMap[locale] && translationsMap[locale][id]) {
+                    return translationsMap[locale][id];
+                }
+
+                // Return default if not found
+                return defaultMessage || id;
+            };
+
+            // Add setup method that Scratch extensions use
+            formatter.setup = function() {
+                return {
+                    locale: locale,
+                    translations: {
+                        [locale]: translationsMap[locale] || {}
+                    }
+                };
+            };
+
+            return formatter;
+        }
+
+        window.testLocale = function(testLocale) {
+            document.getElementById('current-locale').textContent = testLocale;
+
+            const resultsDiv = document.getElementById('test-results');
+            const samplesDiv = document.getElementById('block-samples');
+
+            if (!module) {
+                resultsDiv.innerHTML = '<p class="error">Module not loaded</p>';
+                return;
+            }
+
+            let resultsHtml = `<h3>Testing locale: ${testLocale}</h3>`;
+
+            // Get all available translations
+            const entryTranslations = module.entry.translationMap || {};
+            const blockTranslations = {}; // Block translations are embedded in blockClass
+
+            // Create format message for entry
+            const entryFormatter = createFormatMessage(testLocale, entryTranslations);
+            module.entry.setFormatMessage(entryFormatter);
+
+            // Create format message for blocks
+            const blockFormatter = createFormatMessage(testLocale, entryTranslations);
+            module.blockClass.formatMessage = blockFormatter;
+
+            // Test entry translations
+            resultsHtml += `<h4>Entry Translations:</h4>`;
+            resultsHtml += `<pre>`;
+            resultsHtml += `Name: ${module.entry.name}\n`;
+            resultsHtml += `Description: ${module.entry.description}\n`;
+            resultsHtml += `</pre>`;
+
+            // Check if German was found via fallback
+            const baseLocale = testLocale.split('-')[0].split('_')[0];
+            if (testLocale !== baseLocale && entryTranslations[baseLocale]) {
+                resultsHtml += `<p class="success">✓ Locale fallback: ${testLocale} → ${baseLocale}</p>`;
+            } else if (entryTranslations[testLocale]) {
+                resultsHtml += `<p class="success">✓ Exact locale match: ${testLocale}</p>`;
+            } else {
+                resultsHtml += `<p class="warning">⚠ No translations found for ${testLocale} or ${baseLocale}, using defaults</p>`;
+            }
+
+            // Show available translations for this locale
+            const availableTranslations = entryTranslations[testLocale] || entryTranslations[baseLocale];
+            if (availableTranslations) {
+                resultsHtml += `<h4>Available Translations (${testLocale}):</h4>`;
+                resultsHtml += `<pre>${JSON.stringify(availableTranslations, null, 2)}</pre>`;
+            }
+
+            resultsDiv.innerHTML = resultsHtml;
+
+            // Show block translation samples
+            if (availableTranslations) {
+                const blockKeys = Object.keys(availableTranslations).filter(k => k.startsWith('mbitMore.') && !k.includes('entry'));
+                const sampleKeys = blockKeys.slice(0, 10);
+
+                let samplesHtml = `<h4>Sample Block Translations (first 10):</h4><pre>`;
+                sampleKeys.forEach(key => {
+                    samplesHtml += `${key}: ${availableTranslations[key]}\n`;
+                });
+                samplesHtml += `</pre>`;
+                samplesHtml += `<p>Total block translations: <code>${blockKeys.length}</code></p>`;
+
+                samplesDiv.innerHTML = samplesHtml;
+            } else {
+                samplesDiv.innerHTML = '<p>No block translations available for this locale</p>';
+            }
+        };
+
+        // Auto-test German on load
+        if (module) {
+            testLocale('de-DE');
+        }
+    </script>
+</body>
+</html>
