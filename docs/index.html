@@ -1,19 +1,204 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="de">
 <head>
-  <meta http-equiv="Refresh" content="5; URL=https://microbit-more.github.io/">
-  <script type="text/javascript">
-    var language = navigator.language;
-    if (language.indexOf('ja') > -1) {
-      document.location.href = 'index-ja.html';
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroBit More - Programmiere deinen micro:bit!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .emoji {
+            font-size: 4em;
+            margin: 20px 0;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .status-box {
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+        .status-good {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+        .status-warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            color: #856404;
+        }
+        .big-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        .big-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+        .big-button:active {
+            transform: translateY(-1px);
+        }
+        .help-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            display: none;
+        }
+        .help-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .help-box ol {
+            text-align: left;
+            padding-left: 20px;
+        }
+        .help-box li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        .help-toggle {
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .footer {
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9em;
+        }
+    </style>
+    <script>
+        function openEditor() {
+            window.location.href = 'https://xcratch.github.io/editor/#https://gretel.github.io/mbit-more-v2/docs/projects/microbit-more-test.sb3';
+        }
+
+        function toggleHelp() {
+            const helpBox = document.getElementById('helpBox');
+            const helpToggle = document.getElementById('helpToggle');
+            if (helpBox.style.display === 'none' || helpBox.style.display === '') {
+                helpBox.style.display = 'block';
+                helpToggle.textContent = '▲ Hilfe verstecken';
+            } else {
+                helpBox.style.display = 'none';
+                helpToggle.textContent = '▼ Wie ändere ich die Sprache?';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const browserLang = navigator.language || navigator.userLanguage;
+            const statusBox = document.getElementById('statusBox');
+            const openButton = document.getElementById('openButton');
+            const helpToggle = document.getElementById('helpToggle');
+
+            if (browserLang.startsWith('de')) {
+                statusBox.className = 'status-box status-good';
+                statusBox.innerHTML = '✅ Super! Dein Browser ist auf Deutsch eingestellt.<br>Die Blöcke werden auf Deutsch sein! 🎉';
+                openButton.textContent = '🚀 Los geht\'s!';
+                helpToggle.style.display = 'none';
+            } else {
+                statusBox.className = 'status-box status-warning';
+                statusBox.innerHTML = '⚠️ Dein Browser ist auf <strong>' + browserLang + '</strong> eingestellt.<br>Die Blöcke werden in dieser Sprache sein.<br>Möchtest du deutsche Blöcke? Dann ändere die Browsersprache!';
+                openButton.textContent = '▶️ Trotzdem starten';
+                helpToggle.style.display = 'inline-block';
+            }
+        });
+    </script>
 </head>
-
 <body>
-  <p>This page is a redirect page. Readers will be automatically redirected to the new 'Microbit More' page.</p>
-  <p>If you are not redirected in five seconds, <a href="https://microbit-more.github.io/">click here</a>.
-</body>
+    <div class="container">
+        <div class="emoji">🤖💻✨</div>
+        <h1>MicroBit More</h1>
+        <p class="subtitle">Programmiere deinen micro:bit mit Scratch!</p>
 
+        <div id="statusBox" class="status-box">
+            Überprüfe Browsersprache...
+        </div>
+
+        <button onclick="openEditor()" id="openButton" class="big-button">
+            🚀 Los geht's!
+        </button>
+
+        <div>
+            <span id="helpToggle" class="help-toggle" onclick="toggleHelp()">
+                ▼ Wie ändere ich die Sprache?
+            </span>
+        </div>
+
+        <div id="helpBox" class="help-box">
+            <h3>🌍 Browsersprache auf Deutsch ändern</h3>
+
+            <p><strong>Chrome oder Edge:</strong></p>
+            <ol>
+                <li>Klicke auf die drei Punkte oben rechts ⋮</li>
+                <li>Wähle "Einstellungen"</li>
+                <li>Suche nach "Sprache"</li>
+                <li>Füge "Deutsch" hinzu</li>
+                <li>Verschiebe Deutsch nach ganz oben</li>
+                <li>Starte den Browser neu</li>
+            </ol>
+
+            <p><strong>Firefox:</strong></p>
+            <ol>
+                <li>Klicke auf die drei Striche ☰</li>
+                <li>Wähle "Einstellungen"</li>
+                <li>Scrolle zu "Sprache"</li>
+                <li>Füge "Deutsch [de]" hinzu</li>
+                <li>Setze es an die erste Stelle</li>
+            </ol>
+
+            <p style="margin-top: 15px; color: #666;">
+                💡 <strong>Tipp:</strong> Du musst dies nur einmal machen!
+            </p>
+        </div>
+
+        <div class="footer">
+            Powered by Xcratch & micro:bit
+        </div>
+    </div>
+</body>
 </html>
