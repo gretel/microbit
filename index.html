@@ -153,18 +153,32 @@
             const statusBox = document.getElementById('statusBox');
             const openButton = document.getElementById('openButton');
             const helpToggle = document.getElementById('helpToggle');
+            const bluetoothStatus = document.getElementById('bluetoothStatus');
 
+            // Check language
+            let statusHTML = '';
             if (browserLang.startsWith('de')) {
-                statusBox.className = 'status-box status-good';
-                statusBox.innerHTML = '✅ Super! Dein Browser ist auf Deutsch eingestellt.<br>Die Blöcke werden auf Deutsch sein! 🎉';
+                statusHTML = '✅ Super! Dein Browser ist auf Deutsch eingestellt.<br>Die Blöcke werden auf Deutsch sein! 🎉';
                 openButton.textContent = '🚀 Los geht\'s!';
                 helpToggle.style.display = 'none';
             } else {
-                statusBox.className = 'status-box status-warning';
-                statusBox.innerHTML = '⚠️ Dein Browser ist auf <strong>' + browserLang + '</strong> eingestellt.<br>Die Blöcke werden in dieser Sprache sein.<br>Möchtest du deutsche Blöcke? Dann ändere die Browsersprache!';
+                statusHTML = '⚠️ Dein Browser ist auf <strong>' + browserLang + '</strong> eingestellt.<br>Die Blöcke werden in dieser Sprache sein.<br>Möchtest du deutsche Blöcke? Dann ändere die Browsersprache!';
                 openButton.textContent = '▶️ Trotzdem starten';
                 helpToggle.style.display = 'inline-block';
             }
+
+            // Check Bluetooth support
+            if (navigator.bluetooth) {
+                statusHTML += '<br><br>🔵 Bluetooth wird unterstützt - kein Scratch Link nötig!';
+                statusBox.className = 'status-box status-good';
+            } else {
+                statusHTML += '<br><br>⚠️ Dein Browser unterstützt kein Bluetooth direkt. Du brauchst <a href="https://scratch.mit.edu/microbit" target="_blank" style="color: inherit; text-decoration: underline;">Scratch Link</a>.';
+                if (browserLang.startsWith('de')) {
+                    statusBox.className = 'status-box status-warning';
+                }
+            }
+
+            statusBox.innerHTML = statusHTML;
         });
     </script>
 </head>
