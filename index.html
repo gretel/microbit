@@ -64,6 +64,27 @@
         .big-button:active {
             transform: translateY(-1px);
         }
+        .big-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .big-button:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        .status-message {
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .status-error {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            color: #856404;
+        }
         .footer {
             margin-top: 30px;
             color: #999;
@@ -93,6 +114,22 @@
         function openEditor() {
             window.location.href = 'https://xcratch.github.io/editor/#https://gretel.github.io/microbit/docs/projects/microbit-more-test.sb3';
         }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const startButton = document.getElementById('startButton');
+            const statusMessage = document.getElementById('statusMessage');
+
+            // Check Bluetooth support
+            if (navigator.bluetooth) {
+                // Bluetooth is supported, button is enabled by default
+                statusMessage.style.display = 'none';
+            } else {
+                // Bluetooth is not supported, disable button
+                startButton.disabled = true;
+                statusMessage.innerHTML = '⚠️ Dein Browser unterstützt kein Bluetooth.<br>Bitte nutze <strong>Chrome</strong> oder <strong>Edge</strong>, um micro:bit mit Scratch zu verwenden.';
+                statusMessage.style.display = 'block';
+            }
+        });
     </script>
 </head>
 <body>
@@ -101,12 +138,14 @@
         <h1>Scratch mit Micro:Bit</h1>
         <p class="subtitle">Programmieren lernen - spielerisch und einfach!</p>
 
-        <button onclick="openEditor()" class="big-button">
+        <div id="statusMessage" class="status-message status-error" style="display: none;"></div>
+
+        <button id="startButton" onclick="openEditor()" class="big-button">
             🚀 Los geht's!
         </button>
 
         <div class="info-section">
-            <h3>ℹ️ Informationen für Eltern</h3>
+            <h3>ℹ️ Technische Informationen</h3>
 
             <p><strong>Was ist Scratch?</strong><br>
             Scratch ist eine visuelle Programmiersprache vom MIT, bei der Kinder mit bunten Blöcken (statt kompliziertem Code) programmieren lernen. Weltweit nutzen Millionen von Kindern Scratch im Unterricht und zu Hause.</p>
