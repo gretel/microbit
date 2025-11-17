@@ -2,18 +2,34 @@
   "name": "mbit-more-v2",
   "version": "0.2.5",
   "description": "Full-functional extension of micro:bit for Scratch3",
+  "type": "module",
   "module": "./dist/microbitMore.mjs",
   "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c --watch",
+    "build:old": "npx xcratch-build --module=microbitMore --gui=../scratch-gui --block=./src/vm/extensions/block --entry=./src/gui/lib/libraries/extensions/entry",
     "register": "npx xcratch-register --id=microbitMore --gui=../scratch-gui --block=./src/vm/extensions/block --entry=./src/gui/lib/libraries/extensions/entry --core --link --use=extension-support util io",
-    "build": "npx xcratch-build --module=microbitMore --gui=../scratch-gui --block=./src/vm/extensions/block --entry=./src/gui/lib/libraries/extensions/entry",
     "start:local": "cd ../scratch-gui && npm run start -- --https",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/plugin-transform-runtime": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
+    "@rollup/plugin-babel": "^6.1.0",
+    "@rollup/plugin-commonjs": "^26.0.3",
+    "@rollup/plugin-image": "^3.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-multi-entry": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "rollup": "^4.53.2",
+    "rollup-plugin-node-polyfills": "^0.2.1",
     "xcratch-build": "^0.5.0",
     "xcratch-register": "^0.4.2"
   },
   "dependencies": {
+    "@babel/runtime": "^7.28.4",
     "pxt-microbit": "^8.1.6"
   }
 }

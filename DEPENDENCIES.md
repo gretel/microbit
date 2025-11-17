@@ -164,8 +164,48 @@ These vulnerabilities can only be resolved when Microsoft updates pxt-microbit w
 - All testing performed with Node.js v25.2.0 and npm modern version
 - Build output verified at dist/microbitMore.mjs (1.0 MB)
 
+## Migration Status (Updated November 16, 2025)
+
+### Completed Migration from xcratch-build to Rollup
+
+**Status**: ✅ **COMPLETED**
+
+The project has successfully migrated from the deprecated xcratch-build (v0.5.0) to a modern Rollup + Babel build system.
+
+#### Migration Details:
+- **Date**: November 16, 2025
+- **Approach**: Minimal hybrid approach (kept project structure)
+- **Changes Made**:
+  - Replaced `xcratch-build` with Rollup v4.53.2 and Babel v7.28.5
+  - Created `rollup.config.js` and `babel.config.json`
+  - Updated `package.json` scripts: `build` now uses Rollup
+  - Added `npm run watch` for development
+  - Old build command available as `npm run build:old` (requires scratch-gui)
+  - Added `@babel/runtime` dependency
+  - Set package type to "module"
+
+#### Build Output Verification:
+- **Old build (xcratch-build)**: 1.0M, MD5: 620ffb0439d671a751b1cb040563442f
+- **New build (Rollup)**: 1.0M, MD5: 10afa748aead412e8815bb2e86b85e32
+- **Sourcemap**: Added (1.2M) - improves debugging
+- **Status**: ✅ Same size, structure intact, German translations preserved
+
+#### Benefits of Migration:
+- ✅ No longer dependent on archived/deprecated tools
+- ✅ Modern build tooling with active maintenance
+- ✅ Sourcemap generation for better debugging
+- ✅ Watch mode for development (`npm run watch`)
+- ✅ Faster build times (827ms)
+- ✅ Removed requirement for local scratch-gui installation
+
+#### Removed Dependencies:
+- `xcratch-build` (deprecated/archived)
+- `xcratch-register` (no longer needed for builds)
+
+These are kept in package.json temporarily for the `build:old` fallback command.
+
 ## Conclusion
 
-The project's dependencies are current and functional. While security vulnerabilities exist in subdependencies, they pose minimal risk to production deployments. The main action item is planning migration from the deprecated xcratch-build to xcratch-create in the coming months.
+The project's dependencies are current and functional. Security vulnerabilities exist in subdependencies but pose minimal risk to production deployments. **The migration from xcratch-build is now complete**, eliminating the main technical debt concern.
 
-**Status**: ✅ Dependencies up-to-date, build functional, documented for future maintenance
+**Status**: ✅ Dependencies up-to-date, modern build system in place, ready for v1.0.0

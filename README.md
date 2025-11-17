@@ -57,4 +57,29 @@ https://gretel.github.io/microbit/dist/microbitMore.mjs
 
 ---
 
+## Development
+
+### Building the Extension
+
+This project uses Rollup and Babel for building. To build the extension:
+
+```bash
+# Install dependencies
+npm install
+
+# Build the extension
+npm run build
+
+# Watch mode for development
+npm run watch
+```
+
+The built extension will be in `dist/microbitMore.mjs`.
+
+### Build System
+
+**Note:** This project migrated from the deprecated `xcratch-build` to a modern Rollup-based build system. The old build command is still available as `npm run build:old` for fallback purposes, but requires a local scratch-gui installation.
+
+---
+
 **This is a fork of [microbit-more/mbit-more-v2](https://github.com/microbit-more/mbit-more-v2)** with fixed German translation loading and an educational landing page for classroom use.

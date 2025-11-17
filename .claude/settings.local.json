@@ -32,7 +32,8 @@
       "Bash(npm view:*)",
       "Bash(npm audit:*)",
       "Bash(md5:*)",
-      "Bash(git tag:*)"
+      "Bash(git tag:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
